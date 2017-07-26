@@ -1,0 +1,17 @@
+vpn-server-api (1.0.2-1) stable; urgency=medium
+
+  * new upstream release
+
+ -- Gijs Molenaar (launchpad ppa build key) <gijs@pythonic.nl>  Wed, 26 Jul 2017 14:55:17 +0200
+
+vpn-server-api (0.1-2) stable; urgency=medium
+
+  * typo in binary name
+
+ -- Gijs Molenaar (launchpad ppa build key) <gijs@pythonic.nl>  Fri, 30 Jun 2017 15:36:00 +0200
+
+vpn-server-api (0.1-1) stable; urgency=medium
+
+  * Initial release
+
+ -- Gijs Molenaar (launchpad ppa build key) <gijs@pythonic.nl>  Fri, 09 Jun 2017 14:08:39 +0200
