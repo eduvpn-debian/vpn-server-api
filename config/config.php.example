@@ -1,0 +1,157 @@
+<?php
+
+return [
+    // API consumers & credentials
+    'apiConsumers' => [
+        'vpn-user-portal' => 'XXX-vpn-user-portal/vpn-server-api-XXX',
+        'vpn-admin-portal' => 'XXX-vpn-admin-portal/vpn-server-api-XXX',
+        'vpn-server-node' => 'XXX-vpn-server-node/vpn-server-api-XXX',
+    ],
+
+    // CA Configuration
+    'CA' => [
+        'key_size' => 4096,
+        'ca_expire' => 1826,
+        'cert_expire' => 365,
+        'ca_cn' => 'VPN CA',
+    ],
+
+    // The number of this instance, every instance has a unique number
+    'instanceNumber' => 1,
+
+    // List of VPN profiles
+    'vpnProfiles' => [
+        'internet' => [
+            // The number of this profile, every profile per instance has a unique
+            // number
+            // REQUIRED
+            'profileNumber' => 1,
+
+            // The name of the profile as shown in the user and admin portals
+            // REQUIRED
+            'displayName' => 'Internet Access',
+
+            // The external interface which connects to the Internet or to the
+            // network you want to reach through the VPN
+            // REQUIRED
+            'extIf' => 'eth0',
+
+            // The IPv4 range of the network that will be assigned to clients
+            // REQUIRED
+            'range' => '10.0.0.0/24',
+
+            // The IPv6 range of the network that will be assigned to clients
+            // REQUIRED
+            'range6' => 'fd00:4242:4242::/48',
+
+            // The hostname the VPN client(s) will connect to
+            // REQUIRED
+            'hostName' => 'vpn.example',
+
+            // The address the OpenVPN processes will listen on
+            // DEFAULT = '::'
+            'listen' => '::',
+
+            // The IP address to use for connecting to OpenVPN processes
+            // DEFAULT = '127.0.0.1'
+            'managementIp' => '127.0.0.1',
+
+            // Whether or not to NAT the range and range6 network to the extIf
+            // DEFAULT = false
+            'useNat' => true,
+
+            // Do not forward IPv4 traffic, useful for creating an IPv6 only VPN
+            // DEFAULT = false
+            'reject4' => false,
+
+            // Do not forward IPv6 traffic, useful when the VPN server does not have
+            // IPv6 connectivity
+            // DEFAULT = false
+            'reject6' => false,
+
+            // Whether or not to route all traffic from the client over the VPN
+            // DEFAULT = false
+            'defaultGateway' => true,
+
+            // IPv4 and IPv6 routes to push to the client, only used when
+            // defaultGateway is false
+            // DEFAULT = []
+            'routes' => [],
+
+            // IPv4 and IPv6 address of DNS server(s) to push to the client, only
+            // used when defaultGateway is true
+            // DEFAULT  = []
+            // Google Public DNS (https://developers.google.com/speed/public-dns/)
+            //'dns' => ['8.8.8.8', '8.8.4.4', '2001:4860:4860::8888', '2001:4860:4860::8844'],
+            // DNS.WATCH (https://dns.watch/)
+            'dns' => ['84.200.69.80', '84.200.70.40', '2001:1608:10:25::1c04:b12f', '2001:1608:10:25::9249:d69b'],
+
+            // Whether or not to enable two-factor authentication
+            // DEFAULT = false
+            'twoFactor' => false,
+
+            // Whether or not to allow client-to-client traffic
+            // DEFAULT = false
+            'clientToClient' => false,
+
+            // Whether or not to enable OpenVPN logging
+            // DEFAULT = false
+            'enableLog' => false,
+
+            // Whether or not to enable ACLs for controlling who can connect
+            // DEFAULT = false
+            'enableAcl' => false,
+
+            // The list of groups to allow access, requires enableAcl to be true
+            // DEFAULT  = []
+            'aclGroupList' => [],
+
+            // Whether or not to block Samba/CIFS traffic to the Internet
+            // DEFAULT = false
+            'blockSmb' => false,
+
+            // The protocols and ports the OpenVPN processes should use, MUST be
+            // either 1, 2, 4 or 8 proto/port combinations
+            // DEFAULT = ['udp/1194', 'tcp/1194']
+            'vpnProtoPorts' => [
+                'udp/1194',
+                'tcp/1194'
+            ],
+
+            // Hide the profile from the user portal, i.e. do not allow the user to
+            // choose it
+            // DEFAULT = false
+            'hideProfile' => false,
+
+            // use TLS crypt instead of TLS auth (OpenVPN >= 2.4 client only)
+            'tlsCrypt' => false,
+        ],
+    ],
+
+    'groupProviders' => [
+//        'StaticProvider' => [
+//            'all' => [
+//                'displayName' => 'All',
+//                'members' => ['foo', 'bar'],
+//            ],
+//            'students' => [
+//                'displayName' => 'Students',
+//                'members' => ['foo'],
+//            ],
+//            'employees' => [
+//                'displayName' => 'Employees',
+//                'members' => ['bar'],
+//            ],
+//        ],
+
+//        // An extensible protocol for dynamic exchange of group and authorization
+//        // data (http://openvoot.org)
+//        'VootProvider' => [
+//            'clientId' => 'my_client_id',
+//            'clientSecret' => 'my_client_secret',
+//            'authorizationEndpoint' => 'https://authz.surfconext.nl/oauth/authorize',
+//            'tokenEndpoint' => 'https://authz.surfconext.nl/oauth/token',
+//            'apiUrl' => 'https://voot.surfconext.nl/me/groups',
+//        ],
+    ],
+];
