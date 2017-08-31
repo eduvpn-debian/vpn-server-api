@@ -20,7 +20,7 @@ Vcs-Git: git://github.com/eduvpn-debian/vpn-server-api.git
 Vcs-Browser: https://github.com/eduvpn-debian/vpn-server-api/
 
 Package: vpn-server-api
-Architecture: any
+Architecture: all
 Depends: ${misc:Depends},
  php-common,
  php-christian-riesen-otp,
