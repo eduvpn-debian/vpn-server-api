@@ -27,7 +27,7 @@ class Totp
     {
         // for the enroll phase totpSecret is also provided, use that then
         // instead of fetching one from the DB
-        if (is_null($totpSecret)) {
+        if (null === $totpSecret) {
             if (!$this->storage->hasTotpSecret($userId)) {
                 throw new TotpException('user has no TOTP secret');
             }
@@ -40,7 +40,7 @@ class Totp
             throw new TotpException('TOTP key replay');
         }
 
-        if (10 < $this->storage->getTotpAttemptCount($userId)) {
+        if (60 < $this->storage->getTotpAttemptCount($userId)) {
             throw new TotpException('too many attempts at TOTP');
         }
 

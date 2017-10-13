@@ -117,8 +117,12 @@ class ConnectionsModule implements ServiceModuleInterface
         switch ($twoFactorType) {
             case 'yubi':
                 $yubiKeyOtp = InputValidation::yubiKeyOtp($request->getPostParameter('two_factor_value'));
-                // XXX make sure user has a yubiKeyId first!
-                $yubiKeyId = $this->storage->getYubiKeyId($userId);
+                if (null === $yubiKeyId = $this->storage->getYubiKeyId($userId)) {
+                    $msg = '[VPN] YubiKey OTP validation failed: user not enrolled with YubiKey';
+                    $this->storage->addUserMessage($userId, 'notification', $msg);
+
+                    return new ApiErrorResponse('verify_two_factor', $msg);
+                }
                 try {
                     $yubiKey = new YubiKey();
                     $yubiKey->verify($userId, $yubiKeyOtp, $yubiKeyId);
@@ -198,7 +202,7 @@ class ConnectionsModule implements ServiceModuleInterface
         //        var_dump($aclGroupList);
         // one of the groups must be listed in the profile ACL list
         foreach ($memberOf as $memberGroup) {
-            if (in_array($memberGroup['id'], $aclGroupList)) {
+            if (in_array($memberGroup['id'], $aclGroupList, true)) {
                 return true;
             }
         }
