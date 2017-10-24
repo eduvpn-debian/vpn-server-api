@@ -10,7 +10,7 @@ Build-Depends:
  phpunit,
  php-christian-riesen-otp,
  php-fkooman-oauth2-client,
- php-eduvpn-common,
+ php-eduvpn-common (>= 1.0.5),
  php-symfony-translation,
  php-symfony-phpunit-bridge,
  php-fkooman-oauth2-server
