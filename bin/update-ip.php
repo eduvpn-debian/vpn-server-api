@@ -7,7 +7,15 @@
  * Copyright: 2016-2017, The Commons Conservancy eduVPN Programme
  * SPDX-License-Identifier: AGPL-3.0+
  */
-require_once sprintf('%s/vendor/autoload.php', dirname(__DIR__));
+$baseDir = dirname(__DIR__);
+
+// find the autoloader (package installs, composer)
+foreach (['src', 'vendor'] as $autoloadDir) {
+    if (@file_exists(sprintf('%s/%s/autoload.php', $baseDir, $autoloadDir))) {
+        require_once sprintf('%s/%s/autoload.php', $baseDir, $autoloadDir);
+        break;
+    }
+}
 
 use SURFnet\VPN\Common\CliParser;
 use SURFnet\VPN\Common\Config;
@@ -32,8 +40,6 @@ try {
             'profile' => ['the profile to target, e.g. internet', true, true],
             'host' => ['the hostname clients connect to', true, true],
             'ext' => ['the external interface, e.g. eth0', true, true],
-            'reject4' => ['do not forward IPv4 traffic', false, false],
-            'reject6' => ['do not forward IPv6 traffic', false, false],
         ]
     );
 
@@ -58,7 +64,7 @@ try {
     echo sprintf('IPv4 CIDR  : %s', $v4).PHP_EOL;
     echo sprintf('IPv6 prefix: %s', $v6).PHP_EOL;
 
-    $configFile = sprintf('%s/config/%s/config.php', dirname(__DIR__), $instanceId);
+    $configFile = sprintf('%s/config/%s/config.php', $baseDir, $instanceId);
     $config = Config::fromFile($configFile);
     $profileConfig = new ProfileConfig($config->getSection('vpnProfiles')->getSection($opt->getItem('profile'))->toArray());
 
@@ -69,12 +75,6 @@ try {
     $profileConfigData['range6'] = $v6;
     $profileConfigData['hostName'] = $opt->getItem('host');
     $profileConfigData['extIf'] = $opt->getItem('ext');
-    if ($opt->hasItem('reject4')) {
-        $profileConfigData['reject4'] = true;
-    }
-    if ($opt->hasItem('reject6')) {
-        $profileConfigData['reject6'] = true;
-    }
     $configData['vpnProfiles'][$opt->getItem('profile')] = $profileConfigData;
 
     Config::toFile($configFile, $configData, 0644);
