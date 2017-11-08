@@ -1,9 +1,8 @@
 vpn-server-api (1.0.6-1) stable; urgency=medium
 
-  [ Gijs Molenaar ]
   * New upstream version 1.0.6
-
-  [ Gijs Molenaar (launchpad ppa build key) ]
+  * symlink, dont patch
+  * add missing openvpn dependency
 
  -- Gijs Molenaar (launchpad ppa build key) <gijs@pythonic.nl>  Wed, 08 Nov 2017 10:05:26 +0100
 
